@@ -45,6 +45,13 @@ section.userbar div.searchbar{
 section.userbar div.contacts{
     height: calc(100% - 210px);
     background-color: #ffffff;
+    overflow-y: auto;
+}
+
+section.userbar div.contacts > article{
+    padding: 1rem;
+    width: 100%;
+    border: 2px solid black;
 }
 
 main section.conversation-container{
@@ -56,6 +63,7 @@ div.messages{
     height: calc(100% - 145px);
     background-image: url('../img/mine.jpg');
     padding: 2rem;
+    overflow-y: auto;
 }
 
 div.messages > article.message{

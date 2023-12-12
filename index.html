@@ -9,8 +9,6 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -20,28 +18,38 @@
             <section class="userbar flex  flex-column">
                 <div class="user-profile"></div>
                 <div class="notifications"></div>
-                <div class="searchbar"></div>
+                <div class="searchbar">
+                    <label for="contacts-search-input"><i class="fa-solid fa-search"></i></label>
+                    <input type="text" v-model="contactsSearchInput" id="contacts-search-input" name="contacts-search-input" @keyup="filterContacts(contactsSearchInput)">
+                </div>
                 <div class="contacts">
                     <!-- TODO: contacts list will show up here -->
+                    <article v-for="(contact, contactIndex) in contacts" @click="selectContact(contactIndex)" v-show="contact.visible">
+                        <p>
+                            {{ contact.name }}
+                        </p>
+                    </article>
                 </div>
             </section>
             <section class="conversation-container flex flex-column">
-                <div class="user-profile"></div>
-                <div class="messages clearfix">
-                    <article class="message received">
-                        Sciao Belo, stasero vieno?
-                    </article>
-                    <article class="message sent">
-                        No dottoressa, veramente sarei occupato.
-                    </article>
-                    <article class="message received">
-                        Si ma tu ha serio problemo, sposto sembro!
-                    </article>
-                    <article class="message sent">
-                        Se vengo da una psichiatra ci sara' un motivo!!!!
+                <div class="user-profile">
+                    <article>
+                        <p>
+                            {{ contacts[activeContact].name}}
+                        </p>
                     </article>
                 </div>
-                <div class="message-input"></div>
+                <div class="messages clearfix">
+                    <article v-for="message in contacts[activeContact].messages" class="message"
+                        :class="message.status === 'sent' ? 'sent' : 'received'">
+                        {{ message.message }}
+                        <!-- <span>{{ message.date }}</span> -->
+                    </article>
+                </div>
+                <div class="message-input">
+                    <input type="text" v-model="newMessageInput" id="new-message-input" name="new-message-input" @keyup.enter="newUserMessage(newMessageInput)">
+                    <label for="new-message-input"><i class="fa-solid fa-paper-plane" @click="newUserMessage(newMessageInput)"></i></label>
+                </div>
             </section>
         </main>
     </div>
